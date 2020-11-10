@@ -9,8 +9,8 @@ Ce projet est un projet académique (TME9) pour le cours **PPC(Paradigmes de Pro
 
 ## Environnement prérequis pour jouer ce projet
 
-- JDK 6+
-- [scala sbt](https://www.scala-sbt.org/index.html)
+- JDK 8 ou plus
+- [Scala sbt](https://www.scala-sbt.org/index.html)
 - IntelliJ IDEA (optionnel)
 
 ## Étapes d'utilisation
