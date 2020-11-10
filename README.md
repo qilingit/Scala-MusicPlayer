@@ -11,7 +11,7 @@ Ce projet est un projet académique (TME9) pour le cours **PPC(Paradigmes de Pro
 
 - JDK 8 ou plus
 - [Scala sbt](https://www.scala-sbt.org/index.html)
-- IntelliJ IDEA (optionnel)
+- IntelliJ IDEA
 
 ## Étapes d'utilisation
 
