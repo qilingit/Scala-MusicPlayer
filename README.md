@@ -15,8 +15,7 @@ Ce projet est un projet académique (TME9) pour le cours **PPC(Paradigmes de Pro
 
 ## Étapes d'utilisation
 
-1. Ouvrir le dossier projet `*./TME9_code/**NewPlayer***` et `*./TME9_code/**TME9***` dans IntelliJ IDEA
-2. Modifier les codes dans `*./Scala-MusicPlayer/TME9_code/TME9/src/main/scala./tme9_dispatcher.scala*` afin de choisir la musique à jouer selon besoin, par exemple nous pouvons décommenter la ligne 437 `//master ! Play(bwv0417)` pour jouer la musique bwv0417
+1. Ouvrir le dossier projet *./TME9_code/**NewPlayer*** et *./TME9_code/**TME9*** dans IntelliJ IDEA
+2. Modifier les codes dans `*./Scala-MusicPlayer/TME9_code/TME9/src/main/scala./tme9_dispatcher.scala*` afin de choisir la musique à jouer selon besoin, par exemple nous pouvons décommenter la ligne 437 `//master ! Play(bwv0417)` pour jouer la musique `bwv0417`, `bwv0417` est le nom d'une variable qui représente une sorte de musique.
 3. Compiler et lancer le projet **NewPlayer**, puis Compiler et lancer le projet **TME9**
 4. La musique va jouer, profitons le !!!
-
