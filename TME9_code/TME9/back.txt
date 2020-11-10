@@ -1,0 +1,159 @@
+
+package upmc.akka.culto
+
+import math._
+import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext
+import ExecutionContext.Implicits.global
+import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+import javafx.concurrent.Worker
+
+//Question 1
+abstract class ObjetMusical
+case class Note (pitch:Int, vol:Int, dur:Int) extends ObjetMusical
+case class Chord (date:Int, notes:List[Note]) extends ObjetMusical
+case class Chordseq (chords:List[Chord]) extends ObjetMusical
+case class Voix (id:Int, chords:List[Chord]) extends ObjetMusical
+case class MidiNote (pitch:Int, vel:Int, dur:Int, at:Int) 
+
+case class PlayVoice(num : Int, chords:List[Chord])
+case class PlayNormal(chordseq:Chordseq)
+
+sealed trait VoicerSystem
+case object PlayMusic extends ObjetMusical
+
+class Worker extends Actor {
+	def receive = {
+		case voix => {
+
+		}
+	}
+}
+
+class Master(nbOfWorkers: Int, listenter: ActorRef)extends Actor {
+	var workers: List[ActorRef] = Nil
+
+	for (i <- (1 to nbOfWorkers).reverse)
+		workers = context.actorOf(Props[Worker], name = "Worker" + i) :: workers
+
+	def receive = {
+		case PlayMusic => {
+
+		}
+	}
+}
+
+class Listener extends Actor {
+	def receive = {
+		case Voix => {
+
+		}
+		case Chordseq => {
+
+		}
+	}
+}
+
+/* MAIN */
+object PlayCantate extends App {
+	val nrOfWorkers = 5;
+
+  val system = ActorSystem("VoicerSystem")
+ 
+  //Question 1
+  val cantate  = Chordseq ( List (Chord (0 , List (Note (64, 100, 1000)))
+								, Chord (1000 , List (Note (66, 100, 1000)))
+								, Chord (2000 , List (Note (64, 100, 1000)))
+								, Chord (3000 , List (Note (67, 100, 1000)))
+								, Chord (4000 , List (Note (65, 100, 1000)))
+							))
+	val bwv0418 = Chordseq ( List (Chord (0 , List (Note (50, 100, 4000), Note (65, 100, 4000), Note (69, 100, 4000), Note (62, 100, 4000)))
+		, Chord (4000 , List (Note (49, 100, 1000), Note (64, 100, 1000), Note (69, 100, 1000), Note (57, 100, 1000)))
+		, Chord (5000 , List (Note (50, 100, 1000), Note (62, 100, 1000), Note (65, 100, 1000), Note (57, 100, 1000)))
+		, Chord (6000 , List (Note (52, 100, 1000), Note (61, 100, 1000), Note (67, 100, 1000), Note (55, 100, 1000)))
+		, Chord (7000 , List (Note (53, 100, 500), Note (62, 100, 500), Note (69, 100, 1000), Note (62, 100, 1000)))
+		, Chord (7500 , List (Note (55, 100, 500), Note (64, 100, 500)))
+		, Chord (8000 , List (Note (57, 100, 1000), Note (65, 100, 1000), Note (65, 100, 1000), Note (62, 100, 1000)))
+		, Chord (9000 , List (Note (45, 100, 1000), Note (61, 100, 1000), Note (64, 100, 1000), Note (57, 100, 1000)))
+		, Chord (10000 , List (Note (50, 100, 1000), Note (57, 100, 1000), Note (62, 100, 1000), Note (53, 100, 1000)))
+		, Chord (11000 , List (Note (50, 100, 1000), Note (65, 100, 1000), Note (69, 100, 1000), Note (62, 100, 1000)))
+		, Chord (12000 , List (Note (48, 100, 1000), Note (64, 100, 1000), Note (69, 100, 1000), Note (57, 100, 1000)))
+		, Chord (13000 , List (Note (46, 100, 1000), Note (62, 100, 1000), Note (67, 100, 1000), Note (58, 100, 1000)))
+		, Chord (14000 , List (Note (45, 100, 500), Note (64, 100, 1000), Note (72, 100, 1000), Note (60, 100, 1000)))
+		, Chord (14500 , List (Note (48, 100, 500)))
+		, Chord (15000 , List (Note (53, 100, 1000), Note (65, 100, 1000), Note (69, 100, 1000), Note (60, 100, 1000)))
+		, Chord (16000 , List (Note (58, 100, 1000), Note (65, 100, 1000), Note (65, 100, 1000), Note (62, 100, 500)))
+		, Chord (16500 , List (Note (61, 100, 500)))
+		, Chord (17000 , List (Note (58, 100, 1000), Note (64, 100, 500), Note (67, 100, 1000), Note (62, 100, 1000)))
+		, Chord (17500 , List (Note (62, 100, 500)))
+		, Chord (18000 , List (Note (57, 100, 1000), Note (64, 100, 1000), Note (69, 100, 1000), Note (61, 100, 1000)))
+		, Chord (19000 , List (Note (57, 100, 500), Note (64, 100, 1000), Note (69, 100, 500), Note (60, 100, 1000)))
+		, Chord (19500 , List (Note (55, 100, 500), Note (71, 100, 500)))
+		, Chord (20000 , List (Note (53, 100, 1500), Note (69, 100, 1000), Note (72, 100, 1000), Note (60, 100, 500)))
+		, Chord (20500 , List (Note (57, 100, 500)))
+		, Chord (21000 , List (Note (67, 100, 1000), Note (74, 100, 500), Note (59, 100, 500)))
+		, Chord (21500 , List (Note (52, 100, 500), Note (76, 100, 500), Note (61, 100, 500)))
+		, Chord (22000 , List (Note (50, 100, 1000), Note (65, 100, 1000), Note (77, 100, 1000), Note (62, 100, 500)))
+		, Chord (22500 , List (Note (60, 100, 500)))
+		, Chord (23000 , List (Note (55, 100, 1000), Note (67, 100, 1000), Note (76, 100, 1000), Note (58, 100, 1000)))
+		, Chord (24000 , List (Note (56, 100, 1000), Note (65, 100, 500), Note (74, 100, 1000), Note (59, 100, 1000)))
+		, Chord (24500 , List (Note (64, 100, 500)))
+		, Chord (25000 , List (Note (57, 100, 1000), Note (64, 100, 1000), Note (73, 100, 1000), Note (57, 100, 1000)))
+		, Chord (26000 , List (Note (50, 100, 1000), Note (65, 100, 1000), Note (74, 100, 1000), Note (57, 100, 1000)))
+		, Chord (27000 , List (Note (55, 100, 1000), Note (65, 100, 1000), Note (74, 100, 1000), Note (59, 100, 1000)))
+		, Chord (28000 , List (Note (48, 100, 1000), Note (64, 100, 1000), Note (76, 100, 1000), Note (59, 100, 500)))
+		, Chord (28500 , List (Note (57, 100, 1000)))
+		, Chord (29000 , List (Note (47, 100, 1000), Note (71, 100, 1000), Note (74, 100, 1000)))
+		, Chord (29500 , List (Note (56, 100, 500)))
+		, Chord (30000 , List (Note (45, 100, 1000), Note (64, 100, 1000), Note (72, 100, 1000), Note (57, 100, 1000)))
+		, Chord (31000 , List (Note (52, 100, 1000), Note (64, 100, 500), Note (71, 100, 1000), Note (56, 100, 1000)))
+		, Chord (31500 , List (Note (62, 100, 500)))
+		, Chord (32000 , List (Note (53, 100, 1000), Note (60, 100, 500), Note (69, 100, 1000), Note (57, 100, 1000)))
+		, Chord (32500 , List (Note (62, 100, 500)))
+		, Chord (33000 , List (Note (52, 100, 1000), Note (64, 100, 1000), Note (68, 100, 1000), Note (59, 100, 1000)))
+		, Chord (34000 , List (Note (45, 100, 1000), Note (64, 100, 1000), Note (69, 100, 1000), Note (60, 100, 1000)))
+		, Chord (35000 , List (Note (55, 100, 500), Note (67, 100, 1000), Note (74, 100, 1000), Note (59, 100, 1000)))
+		, Chord (35500 , List (Note (53, 100, 500)))
+		, Chord (36000 , List (Note (52, 100, 1000), Note (67, 100, 1000), Note (72, 100, 1000), Note (60, 100, 1000)))
+		, Chord (37000 , List (Note (50, 100, 1000), Note (65, 100, 1000), Note (71, 100, 1000), Note (62, 100, 1000)))
+		, Chord (38000 , List (Note (48, 100, 1000), Note (67, 100, 1000), Note (72, 100, 1000), Note (64, 100, 1000)))
+		, Chord (39000 , List (Note (50, 100, 500), Note (65, 100, 1000), Note (69, 100, 1000), Note (62, 100, 1000)))
+		, Chord (39500 , List (Note (48, 100, 500)))
+		, Chord (40000 , List (Note (46, 100, 1000), Note (65, 100, 1000), Note (69, 100, 1000), Note (62, 100, 500)))
+		, Chord (40500 , List (Note (60, 100, 500)))
+		, Chord (41000 , List (Note (48, 100, 1000), Note (64, 100, 1000), Note (67, 100, 1000), Note (58, 100, 1000)))
+		, Chord (42000 , List (Note (53, 100, 1000), Note (60, 100, 1000), Note (65, 100, 1000), Note (57, 100, 1000)))
+		, Chord (43000 , List (Note (54, 100, 1000), Note (62, 100, 1000), Note (69, 100, 1000), Note (57, 100, 1000)))
+		, Chord (44000 , List (Note (55, 100, 1000), Note (62, 100, 1000), Note (70, 100, 1000), Note (55, 100, 500)))
+		, Chord (44500 , List (Note (53, 100, 500)))
+		, Chord (45000 , List (Note (49, 100, 1000), Note (64, 100, 1000), Note (69, 100, 500), Note (52, 100, 1000)))
+		, Chord (45500 , List (Note (67, 100, 500)))
+		, Chord (46000 , List (Note (50, 100, 500), Note (62, 100, 1000), Note (65, 100, 1000), Note (57, 100, 1000)))
+		, Chord (46500 , List (Note (48, 100, 500)))
+		, Chord (47000 , List (Note (46, 100, 500), Note (62, 100, 1000), Note (67, 100, 1000), Note (55, 100, 500)))
+		, Chord (47500 , List (Note (45, 100, 500), Note (57, 100, 500)))
+		, Chord (48000 , List (Note (44, 100, 1333), Note (62, 100, 1333), Note (65, 100, 1333), Note (59, 100, 1333)))
+		, Chord (49333 , List (Note (45, 100, 1333), Note (61, 100, 1333), Note (64, 100, 1333), Note (52, 100, 667)))
+		, Chord (50000 , List (Note (53, 100, 333)))
+		, Chord (50333 , List (Note (55, 100, 333)))
+		, Chord (50667 , List (Note (50, 100, 1333), Note (57, 100, 1333), Note (62, 100, 1333), Note (54, 100, 1333)))
+	))
+
+
+	val remote = system.actorSelection("akka.tcp://Player@134.157.121.17:6004/user/PlayerActor")
+  //To test your cantate send this msg
+	//remote ! cantate
+
+	val listener = system.actorOf(Props[Listener], name = "listener")
+	val master = system.actorOf(
+		Props(new Master(nrOfWorkers, listener)),
+			name = "master"
+	)
+
+	master ! PlayMusic
+  //End Question 1
+
+
+////////////////////QUESTION 2
+
+}
